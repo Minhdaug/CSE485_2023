@@ -9,6 +9,37 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="css/style_login.css">
 </head>
+<?php
+include 'db.php'; // Kết nối CSDL
+
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $username = $_POST['username'];
+    $password = $_POST['password'];
+
+    // Truy vấn để tìm user theo username
+    $sql = "SELECT * FROM users WHERE username = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("s", $username);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    if ($result->num_rows > 0) {
+        $user = $result->fetch_assoc();
+        // So sánh mật khẩu mà không qua mã hóa
+        if ($password === $user['password']) {
+            echo "<script>alert('Đăng nhập thành công!');</script>";
+        } else {
+            echo "<script>alert('Sai mật khẩu!');</script>";
+        }
+    } else {
+        echo "<script>alert('Không tìm thấy người dùng!');</script>";
+    }
+
+    $stmt->close();
+}
+$conn->close();
+?>
+
 <body>
     <header>
         <nav class="navbar navbar-expand-lg bg-body-tertiary shadow p-3 bg-white rounded">
@@ -52,15 +83,15 @@
                         </div>
                     </div>
                     <div class="card-body">
-                        <form>
+                        <form method="POST" action="login.php">
                             <div class="input-group mb-3">
                                 <span class="input-group-text" id="txtUser"><i class="fas fa-user"></i></span>
-                                <input type="text" class="form-control" placeholder="username" >
+                                <input type="text" name="username" placeholder="Tên đăng nhập" required>
                             </div>
 
                             <div class="input-group mb-3">
                                 <span class="input-group-text" id="txtPass"><i class="fas fa-key"></i></span>
-                                <input type="text" class="form-control" placeholder="password" >
+                                <input type="password" name="password" placeholder="Mật khẩu" required>
                             </div>
                             
                             <div class="row align-items-center remember">
