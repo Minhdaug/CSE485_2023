@@ -16,6 +16,10 @@ include '../db.php'; // Kết nối CSDL
 $sql = "SELECT ma_tloai, ten_tloai FROM theloai";
 $result = $conn->query($sql);
 
+// Kiểm tra thông báo thành công
+if (isset($_GET['success']) && $_GET['success'] == 1) {
+    echo '<div class="alert alert-success" role="alert">Cập nhật thể loại thành công!</div>';
+}
 ?>
 <body>
     <header>
@@ -58,13 +62,14 @@ $result = $conn->query($sql);
                     <thead>
                         <tr>
                             <th scope="col">#</th>
+                            <th scope="col">ID</th>
                             <th scope="col">Tên thể loại</th>
                             <th>Sửa</th>
                             <th>Xóa</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <?php
+                    <?php
                         // Biến để đánh số thứ tự
                         $index = 1;
 
@@ -73,15 +78,16 @@ $result = $conn->query($sql);
                             // Lặp qua từng hàng dữ liệu
                             while ($row = $result->fetch_assoc()) {
                                 echo "<tr>";
-                                echo "<th scope='row'>{$index}</th>";
-                                echo "<td>{$row['ten_tloai']}</td>";
+                                echo "<th scope='row'>{$index}</th>"; // Chỉ số thứ tự
+                                echo "<td>{$row['ma_tloai']}</td>"; // Hiển thị ID của thể loại
+                                echo "<td>{$row['ten_tloai']}</td>"; // Hiển thị tên thể loại
                                 echo "<td><a href='edit_category.php?id={$row['ma_tloai']}'><i class='fa-solid fa-pen-to-square'></i></a></td>";
                                 echo "<td><a href='delete_category.php?id={$row['ma_tloai']}'><i class='fa-solid fa-trash'></i></a></td>";
                                 echo "</tr>";
                                 $index++;
                             }
                         } else {
-                            echo "<tr><td colspan='4' class='text-center'>Không có thể loại nào.</td></tr>";
+                            echo "<tr><td colspan='5' class='text-center'>Không có thể loại nào.</td></tr>";
                         }
                         ?>
                     </tbody>
