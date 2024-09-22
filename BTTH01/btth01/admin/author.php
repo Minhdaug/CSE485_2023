@@ -15,8 +15,16 @@ include '../db.php'; // Kết nối CSDL
 // Truy vấn lấy danh sách thể loại
 $sql = "SELECT ma_tgia, ten_tgia FROM tacgia";
 $result = $conn->query($sql);
-if (isset($_GET['success']) && $_GET['success'] == 1) {
-    echo '<div class="alert alert-success" role="alert">Tác giả đã được thêm thành công!</div>';
+if (isset($_GET['success'])) {
+    if ($_GET['success'] == 0){
+    echo '<div class="alert alert-success" role="alert">Thêm tác giả thành công!</div>';
+    }
+    if ($_GET['success'] == 1){
+        echo '<div class="alert alert-success" role="alert">Sửa thông tin tác giả thành công!</div>';
+    }
+    if ($_GET['success'] == 2){
+        echo '<div class="alert alert-success" role="alert">Xóa tác giả thành công!</div>';
+    }
 }
 ?>
 <body>

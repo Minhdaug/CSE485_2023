@@ -18,7 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $sql = "INSERT INTO tacgia (ten_tgia) VALUES ('$ten_tgia')";
     if ($conn->query($sql) === TRUE) {
         // Chuyển hướng về trang category.php sau khi thêm thành công
-        header("Location: author.php?success=1");
+        header("Location: author.php?success=0");
         exit(); // Dừng thực thi script
     } else {
         echo "Lỗi: " . $sql . "<br>" . $conn->error;

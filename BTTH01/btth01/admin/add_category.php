@@ -18,7 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $sql = "INSERT INTO theloai (ten_tloai) VALUES ('$ten_tloai')";
     if ($conn->query($sql) === TRUE) {
         // Chuyển hướng về trang category.php sau khi thêm thành công
-        header("Location: category.php?success=1");
+        header("Location: category.php?success=0");
         exit(); // Dừng thực thi script
     } else {
         echo "Lỗi: " . $sql . "<br>" . $conn->error;

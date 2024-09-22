@@ -17,8 +17,16 @@ $sql = "SELECT ma_tloai, ten_tloai FROM theloai";
 $result = $conn->query($sql);
 
 // Kiểm tra thông báo thành công
-if (isset($_GET['success']) && $_GET['success'] == 1) {
-    echo '<div class="alert alert-success" role="alert">Cập nhật thể loại thành công!</div>';
+if (isset($_GET['success'])) {
+    if ($_GET['success'] == 0){
+    echo '<div class="alert alert-success" role="alert">Thêm thể loại thành công!</div>';
+    }
+    if ($_GET['success'] == 1){
+        echo '<div class="alert alert-success" role="alert">Sửa thông tin thể loại thành công!</div>';
+    }
+    if ($_GET['success'] == 2){
+        echo '<div class="alert alert-success" role="alert">Xóa thể loại thành công!</div>';
+    }
 }
 ?>
 <body>
